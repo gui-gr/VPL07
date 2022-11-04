@@ -1,9 +1,8 @@
 #include "intruso.hpp"
 
 void Intruso::set_senha_vazada(std::string vazou) {
-	// vazou: string do tipo "1 7 3 9 0 8 5 6 2 4 B C E A E B "
 	std::vector<std::pair<int,int>> associacao;
-
+	
 	for(unsigned int i = 0; i < 5; i++) {
 		std::string::size_type sz;
 		std::pair<int,int> dupla;		
@@ -40,4 +39,23 @@ void Intruso::set_senha_vazada(std::string vazou) {
 
 std::string Intruso::crack_senha() {
 
+	std::string saida = {};
+
+	for(int j = 0; j < 6; j++) {
+		int primeiro = 0, segundo = 0;
+		std::pair<int,int> aux = (digitadas[0])[j];
+		
+		for(auto &i : digitadas) {
+			if(aux.first == i[j].first || aux.first == i[j].second)
+				primeiro++;
+			if(aux.second == i[j].first || aux.second == i[j].second)
+				segundo++;		
+		}
+		
+		if(primeiro > segundo) saida += std::to_string(aux.first);
+		else saida += std::to_string(aux.second);
+		saida += " ";
+	}
+	
+	return saida;
 }
